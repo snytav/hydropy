@@ -53,11 +53,5 @@ j = 3
 
 df1,df2 = get_integration_functions(i,j)
 
-print(df1)
-print(df2)
-
-s = sympy.integrate(df1*df2,(x,0,hx))
-print("integral ",s)
-
 num = integrate_on_FE(df1,df2,0.25)
 print(num)
