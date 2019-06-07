@@ -6,10 +6,10 @@ def phi(i,n):
     x,hx = sympy.symbols('x hx')
 
     ph = []
-    print('function num ',i)
+    #print('function num ',i)
     for j in range(0,i):
         ph.append(0.0)
-    print(ph)
+    #print(ph)
      
     y =  x/hx
     ph.append(y)
@@ -17,9 +17,9 @@ def phi(i,n):
     ph.append(y)
 
     for j in range(i+2,n):
-#        print(j)
+#        #print(j)
         ph.append(0.0)
-    print(len(ph))
+    #print(len(ph))
     return ph
 
 # i,j - numbers of basis functions
@@ -27,15 +27,15 @@ def phi(i,n):
 def get_integration_functions(i,j,num_fe):
     fi = phi(i,n)
     fj = phi(j,n)
-    print(fi)
-    print(fj)
+    #print(fi)
+    #print(fj)
 
     ic = i
     f1 = fi[num_fe]
     f2 = fj[num_fe]
-    print('integration element ',num_fe)
-    print(f1)
-    print(f2)
+    #print('integration element ',num_fe)
+    #print(f1)
+    #print(f2)
 
     x,hx = sympy.symbols('x hx')
 
@@ -49,21 +49,21 @@ def get_integration_functions(i,j,num_fe):
     else:
        df2 = f2.diff(x)
 
-    print(df1)
-    print(df2)
+    #print(df1)
+    #print(df2)
  
     return [df1,df2]
 
 def integrate_on_FE(f1,f2,dx):
     x,hx = sympy.symbols('x hx')
     s = sympy.integrate(f1*f2,(x,0,hx))
-#    print("integral ",s)
+#    #print("integral ",s)
     num = s.subs(hx,dx)
     return num
 
 def integrate_two_functions(i,j,x,ic):
     dx = x[ic] - x[ic-1]
-    print(dx)
+    #print(dx)
     df1,df2 = get_integration_functions(i,j,ic)
     num = integrate_on_FE(df1,df2,dx)
     return num
@@ -87,13 +87,13 @@ def get_stiffness_element(i,j,x):
 
 n = 23
 x = np.linspace(0,1,n)
-#print(x)
+##print(x)
 i = 1
 j = 2
 
-num = get_stiffness_element(i,j,x)
-print('result ij ',num)
-print('##################################################')
-num = get_stiffness_element(j,i,x)
-print('result ji ',num)
+num = get_stiffness_element(i,i,x)
+print('result ii ',num)
+#print('##################################################')
+num = get_stiffness_element(j,j,x)
+print('result jj ',num)
 
