@@ -69,9 +69,9 @@ def integrate_two_functions(i,j,x,ic,prep):
     return num
 
 
-def get_stiffness_element(i,j,x):
-    n1  = integrate_two_functions(i,j,x,i,get_integration_functions)
-    n2  = integrate_two_functions(i,j,x,j,get_integration_functions)
+def get_stiffness_element(i,j,x,prep):
+    n1  = integrate_two_functions(i,j,x,i,prep)
+    n2  = integrate_two_functions(i,j,x,j,prep)
 
     if abs(n1) > 1e-15 and abs(n2) > 1e-15:
        return [n1,n2]
@@ -91,15 +91,15 @@ x = np.linspace(0,1,n)
 i = 1
 j = 2
 
-num = get_stiffness_element(i,i,x)
+num = get_stiffness_element(i,i,x,get_integration_functions)
 print('result ii ',num)
 #print('##################################################')
-num = get_stiffness_element(j,j,x)
+num = get_stiffness_element(j,j,x,get_integration_functions)
 print('result jj ',num)
 
-num = get_stiffness_element(i,j,x)
+num = get_stiffness_element(i,j,x,get_integration_functions)
 print('result ij ',num)
 #print('##################################################')
-num = get_stiffness_element(j,i,x)
+num = get_stiffness_element(j,i,x,get_integration_functions)
 print('result ji ',num)
 
