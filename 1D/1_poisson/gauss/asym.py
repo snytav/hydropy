@@ -61,17 +61,17 @@ def integrate_on_FE(f1,f2,dx):
     num = s.subs(hx,dx)
     return num
 
-def integrate_two_functions(i,j,x,ic):
+def integrate_two_functions(i,j,x,ic,prep):
     dx = x[ic] - x[ic-1]
     #print(dx)
-    df1,df2 = get_integration_functions(i,j,ic)
+    df1,df2 = prep(i,j,ic)
     num = integrate_on_FE(df1,df2,dx)
     return num
 
 
 def get_stiffness_element(i,j,x):
-    n1  = integrate_two_functions(i,j,x,i)
-    n2  = integrate_two_functions(i,j,x,j)
+    n1  = integrate_two_functions(i,j,x,i,get_integration_functions)
+    n2  = integrate_two_functions(i,j,x,j,get_integration_functions)
 
     if abs(n1) > 1e-15 and abs(n2) > 1e-15:
        return [n1,n2]
@@ -96,4 +96,10 @@ print('result ii ',num)
 #print('##################################################')
 num = get_stiffness_element(j,j,x)
 print('result jj ',num)
+
+num = get_stiffness_element(i,j,x)
+print('result ij ',num)
+#print('##################################################')
+num = get_stiffness_element(j,i,x)
+print('result ji ',num)
 
